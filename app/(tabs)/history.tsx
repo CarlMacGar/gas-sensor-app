@@ -8,16 +8,15 @@ import HistoryItem from "@/components/HistoryItem";
 
 import { getHistory } from "@/services/history";
 
-//TODO: Hacerlo dinámico usando el componente de React-Native FlatList
-
 export default function TabTwoScreen() {
   const [history, setHistory] = useState<Object | any>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchData = async () => {
     try {
-      const data = await getHistory(); // Reemplaza con tu función para obtener datos
-      setHistory(data);
+      const data = await getHistory();
+      const reversedData = data.reverse();
+      setHistory(reversedData);
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -27,7 +26,7 @@ export default function TabTwoScreen() {
   useFocusEffect(
     useCallback(() => {
       fetchData();
-    }, []) // No incluyas dependencias si no necesitas reaccionar a cambios externos
+    }, [])
   );
 
   return (

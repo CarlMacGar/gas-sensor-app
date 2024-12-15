@@ -3,6 +3,7 @@ import { THINGSPEAK_URL } from '@env';
 
 export const getCurrentThingspeak = async () => {
     const url = `${THINGSPEAK_URL}1`;
+    console.log(url)
     const response = await axios.get(url);
     return response.data;
 }

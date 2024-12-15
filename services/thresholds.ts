@@ -8,6 +8,7 @@ export const getThresholds = async () => {
 
 export const setThresholds = async (temperature: string, gas: string) => {
     const url = `${WRITE_THRESHOLDS_URL}&field1=${temperature}&field2=${gas}`;
+    console.log(url);
     const response = await axios.get(url);
     return response.status;
 }

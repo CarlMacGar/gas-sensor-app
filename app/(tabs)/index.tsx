@@ -1,11 +1,13 @@
-import { StyleSheet } from 'react-native';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, View } from '@/components/Themed';
-import { useThemeColor } from '@/components/Themed';
-import CustomButton from '@/components/CustomButton';
-import {useState, useEffect} from 'react';
-import { getCurrentThingspeak } from '@/services/thingspeak';
-import ChartsSection from '@/components/ChartsSection';
+import { StyleSheet } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Text, View } from "@/components/Themed";
+import { useThemeColor } from "@/components/Themed";
+import CustomButton from "@/components/CustomButton";
+import { useState, useEffect } from "react";
+import { getCurrentThingspeak } from "@/services/thingspeak";
+import { testFunctionality } from "@/services/test";
+import ChartsSection from "@/components/ChartsSection";
+import { ScrollView } from "react-native";
 
 interface Data {
   gasLevel: number;
@@ -20,9 +22,12 @@ export default function TabOneScreen() {
 
   const fetchData = async () => {
     try {
-      const response = await getCurrentThingspeak(); 
+      const response = await getCurrentThingspeak();
 
-      setData({gasLevel: response.feeds[0].field2, temperature: response.feeds[0].field1});
+      setData({
+        gasLevel: response.feeds[0].field2,
+        temperature: response.feeds[0].field1,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -39,34 +44,76 @@ export default function TabOneScreen() {
   }, []);
 
   // Usar colores de tema
-    const backgroundColor = useThemeColor({}, 'background');
-    const textColor = useThemeColor({}, 'text');
+  const backgroundColor = useThemeColor({}, "background");
+  const textColor = useThemeColor({}, "text");
 
   return (
-    <View style={[{flex: 1,
-      alignItems: 'center',
-      justifyContent: 'flex-start',}, {backgroundColor}]}>
+    <View
+      style={[
+        { flex: 1, alignItems: "center", justifyContent: "flex-start", marginBottom:15 },
+        { backgroundColor },
+      ]}
+    >
+      <ScrollView>
+        <View style={styles.container}>
+          <FontAwesome
+            name="home"
+            size={50}
+            color="white"
+            style={styles.icon}
+          />
 
-      <ChartsSection />
-      
-      <View style={styles.separator} lightColor="rgba(255,255,255,0.1)" darkColor="#eee" />
+          <Text style={styles.title}>Bienvenido a la Página Principal</Text>
+          <View
+            style={styles.separator}
+            lightColor="#eee"
+            darkColor="rgba(255,255,255,0.1)"
+          />
+          <View
+            style={styles.separator}
+            lightColor="rgba(255,255,255,0.1)"
+            darkColor="#eee"
+          />
 
-      <View style={[styles.dataContainer] }>
-        <View style={styles.dataItem}>
-          <Text style={[styles.dataValue, { color: textColor }]}>{data.gasLevel}%</Text>
-          <FontAwesome name="cloud" size={15} color="gray" style={styles.dataIcon} />
-          <Text style={[styles.dataLabel, { color: textColor }]}>Gas</Text>
+          <View style={[styles.dataContainer]}>
+            <View style={styles.dataItem}>
+              <Text style={[styles.dataValue, { color: textColor }]}>
+                {data.gasLevel}%
+              </Text>
+              <FontAwesome
+                name="cloud"
+                size={15}
+                color="gray"
+                style={styles.dataIcon}
+              />
+              <Text style={[styles.dataLabel, { color: textColor }]}>Gas</Text>
+            </View>
+
+            <View style={styles.dataItem}>
+              <Text style={[styles.dataValue, { color: textColor }]}>
+                {data.temperature}°C
+              </Text>
+              <FontAwesome
+                name="thermometer-half"
+                size={15}
+                color="red"
+                style={styles.dataIcon}
+              />
+              <Text style={[styles.dataLabel, { color: textColor }]}>
+                Temperatura
+              </Text>
+            </View>
+          </View>
+          <View style={styles.dataContainer}>
+            <CustomButton
+              title="Probar dispositivo"
+              onPress={() => testFunctionality(1)}
+            />
+          </View>
+          <ChartsSection />
+
         </View>
-
-        <View style={styles.dataItem}>
-          <Text style={[styles.dataValue, { color: textColor }]}>{data.temperature}°C</Text>
-          <FontAwesome name="thermometer-half" size={15} color="red" style={styles.dataIcon} />
-          <Text style={[styles.dataLabel, { color: textColor }]}>Temperatura</Text>
-        </View>
-      </View>
-      <View style={styles.dataContainer}>
-        <CustomButton title='Probar dispositivo' onPress={() => console.log('Probando')}/>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -145,13 +192,13 @@ const styles = StyleSheet.create({
   },
 });
 
- */ 
+ */
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: "center",
+    justifyContent: "flex-start",
     paddingTop: 20,
   },
   icon: {
@@ -159,26 +206,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    fontWeight: 'semibold',
+    fontWeight: "semibold",
     marginBottom: 10,
-    color: '#808080',
+    color: "#808080",
   },
   separator: {
     height: 1,
-    width: '80%',
+    marginBottom:10,
+    width: "80%",
   },
   dataContainer: {
-    flexDirection: 'row', // Alinea los datos horizontalmente
-    justifyContent: 'space-around',
-    width: '80%', // Ajusta el ancho del contenedor
-    marginTop: 20,
+    flexDirection: "row", // Alinea los datos horizontalmente
+    justifyContent: "space-around",
+    width: "80%", // Ajusta el ancho del contenedor
+    marginVertical: 20,
   },
   dataItem: {
-    alignItems: 'center', // Centra el contenido de cada ítem
+    alignItems: "center", // Centra el contenido de cada ítem
   },
   dataValue: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 5,
   },
   dataIcon: {
@@ -186,6 +234,6 @@ const styles = StyleSheet.create({
   },
   dataLabel: {
     fontSize: 14,
-    color: 'gray',
+    color: "gray",
   },
 });

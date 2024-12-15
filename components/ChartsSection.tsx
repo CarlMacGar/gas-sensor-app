@@ -3,6 +3,7 @@ import TemperatureChart from "./TemperatureChart";
 import GasChart from "./GasChart";
 import { useEffect, useState } from "react";
 import { getThingspeakData } from "@/services/mean";
+import { useThemeColor } from "./Themed";
 
 interface ChartData {
   intervalStartList: string[];
@@ -17,6 +18,8 @@ export default function ChartsSection() {
     averageTemperatureList: [],
   });
   const [loading, setLoading] = useState(true);
+
+  const textColor = useThemeColor({}, "text");
 
   useEffect(() => {
     getThingspeakData()
@@ -35,7 +38,7 @@ export default function ChartsSection() {
       {loading ? ( <Text>Cargando...</Text> ) : (
         <View style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={[styles.title, { color: "white" }]}>
+        <Text style={[styles.title, { color: textColor }]}>
           Gráfica de Temperatura
         </Text>
         <TemperatureChart
@@ -45,8 +48,8 @@ export default function ChartsSection() {
           }}
         />
       </View>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={[styles.title, { color: "white" }]}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginVertical:20 }}>
+        <Text style={[styles.title, { color: textColor }]}>
           Gráfica de la contaminación del aire
         </Text>
         <GasChart
@@ -66,7 +69,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 15,
     fontWeight: "semibold",
-    marginBottom: 5,
+    marginBottom: 15,
     color: "#808080",
   },
 });

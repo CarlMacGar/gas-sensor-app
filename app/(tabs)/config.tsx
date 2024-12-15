@@ -41,7 +41,7 @@ export default function TabTwoScreen() {
 
     const resEmail = await setEmail(emailIn);
     const resThresholds = await setThresholds(tempLimit, gasLimit);
-
+    
     if (resEmail === 200 && resThresholds === 200) {
       Alert.alert(
         "Configuración guardada",
