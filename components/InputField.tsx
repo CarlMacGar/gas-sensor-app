@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text, View, TextInput } from './Themed';
 
-export default function InputField({ label }: {label:string}) {
-    const [text, setText] = useState('');
+export default function InputField({ label, setText, text }: {label:string, setText:(text:string)=>void, text:string}) {
 
   return (
     <View>

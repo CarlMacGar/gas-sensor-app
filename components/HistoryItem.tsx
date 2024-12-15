@@ -5,19 +5,19 @@ import { useThemeColor } from './Themed';
 type HistoryItemProps = {
   data: {
     date: string;
-    field1: number;
-    field2: number;
+    temperature: number;
+    gas: number;
     reason: string;
   };
 };
 
 export default function HistoryItem({ data }: HistoryItemProps) {
-  const { date, field1, field2, reason } = data;
+  const { date, temperature, gas, reason } = data;
 
   const formatDate = (dateString: string) => {
-    const [date, time] = dateString.split(' ');
-    const [year, month, day] = date.split('-');
-    const formattedDate = `${day}/${month}/${year}`;
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString();
+    const time = date.toLocaleTimeString();
     return { formattedDate, time };
   };
 
@@ -32,8 +32,8 @@ export default function HistoryItem({ data }: HistoryItemProps) {
       <Text style={[styles.reasonText, { color: reasonColor }]}>{`Razón: ${reason}`}</Text>
       <Text style={[styles.dateText, { color: textColor }]}>{`Fecha: ${formattedDate}`}</Text>
       <Text style={[styles.dateText, { color: textColor }]}>{`Hora: ${time}`}</Text>
-      <Text style={[styles.fieldText, { color: textColor }]}>{`Temperatura (°C): ${field1}`}</Text>
-      <Text style={[styles.fieldText, { color: textColor }]}>{`Porcentaje de contaminación en el aire: ${field2}%`}</Text>
+      <Text style={[styles.fieldText, { color: textColor }]}>{`Temperatura (°C): ${temperature}`}</Text>
+      <Text style={[styles.fieldText, { color: textColor }]}>{`Porcentaje de contaminación en el aire: ${gas}%`}</Text>
     </View>
   );
 }
