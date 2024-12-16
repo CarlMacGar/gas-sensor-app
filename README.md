@@ -74,5 +74,5 @@ npm i
 ## Ejecutar el proyecto
 Para ejecutar el proyecto de forma local en modo desarrollo, usar el siguiente comando:
 ~~~ bash
-npm run dev
+npm run start
 ~~~
