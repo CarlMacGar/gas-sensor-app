@@ -1,4 +1,8 @@
+# Gas-Sensor-App
+## Overview
+Gas-Sensor-App es una aplicación móvil desarrollada en React Native con el propósito de monitorear en tiempo real niveles de gas y temperatura en un entorno determinado. Está diseñada para brindar seguridad al usuario mediante la visualización clara de datos y alertas sobre condiciones potencialmente peligrosas. La aplicación integra funcionalidades dinámicas y gráficas interactivas. Proyecto con fines académicos
 
+## Estructura del proyecto
 ```
 gas-sensor-app
 ├─ 📁.expo
@@ -56,3 +60,19 @@ gas-sensor-app
 ├─ 📄README.md
 └─ 📄tsconfig.json
 ```
+
+## Instalación
+Para empezar el proyecto, es necesario instalar las dependencias que necesita, esto usando:
+~~~ bash
+npm install
+~~~
+\* Alternatively, you can use:
+~~~ bash
+npm i
+~~~
+
+## Ejecutar el proyecto
+Para ejecutar el proyecto de forma local en modo desarrollo, usar el siguiente comando:
+~~~ bash
+npm run dev
+~~~
